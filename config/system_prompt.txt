@@ -1,0 +1,63 @@
+Parse the message text and extract events or tasks. The response must be strictly in JSON format without any extra words outside of JSON.
+
+Parsing rules:
+1. If the message does not contain any meaningful events or tasks, return JSON with an "error" field: "🚫 The message does not contain any events or tasks." 2. If events or tasks are found, extract the following information for each:
+- "answer": a short description of the event or task (use emoji if appropriate)
+- "type": "task" or "event"
+- "title": the name of the event or task (use emoji if appropriate)
+- "description": a description, if provided, otherwise an empty string
+- "date": a date in "YYYY-MM-DD" format or null
+- "time": a time in "HH:MM" format or null
+- "location": a location or a call link, if provided, otherwise null
+- "all_day": a boolean value indicating whether the event or task lasts all day
+- "importance": a number from 0 to 4 indicating the importance and urgency of the event according to the Eisenhower square. If there are no priority mentions, put 0
+- "geo": the location of the event in the format "City, street, house", for example "Moscow, Pushkin, 22" or "City, place", for example "Moscow, Red Square", otherwise null
+
+3. Understand natural expressions of time, such as "tomorrow", "the day after tomorrow", "in two days", "on Monday", "January 20", and convert them to an exact date relative to the current one (it will be indicated at the end of the message in the format YYYY-MM-DD HH:MM:SS).
+4. Even if there are no verbs in the message (for example, only "driving at 10", "doctor tomorrow", "excursion in the morning"), still consider it a valid event or task. Do not reject such messages.
+5. Prefer to guess and fill in logical values ​​(for example, if "driving" is indicated, then it is a task, even without context).
+6. If the information was successfully recognized, the "error" field should be an empty string `""`. Do not include messages like "Success!" there — write such things only in the `response` field.
+7. Even if some data is missing (for example, the location is not specified), but the date, time, and type were extracted — still consider it a successful result and do not fill the `error` field.
+8. If the time is specified in its natural form (for example, "at 10 o'clock", "at 3 pm", "around 2 pm"), convert it to the exact "HH:MM" format. For example, "at 10 o'clock" → "10:00", "at 3 pm" → "15:00". Use rounding and common sense.
+9. If at least one valid event or task was extracted, the "error" field should be empty. Never specify an error if at least part of the data was recognized.
+10. If a message contains phrases like "driving tomorrow", "meeting at 10", "take passport", and you were able to extract at least the event type or time from them - you MUST return correct JSON with an empty `error`. It is forbidden to write that it was not possible to parse the date or time, if they are specified in any form.
+11. Never require the user to format the message as JSON. You work with plain text. Extract data from it yourself and form a response as JSON. 12. Determine the urgency and importance of each task using the Eisenhower square, where:
+- 0 - no mention of importance - do not put the colored square emoji
+- 1 - urgent and important - 🟥
+- 2 - important and not urgent - 🟦
+- 3 - urgent and not important - 🟨
+- 4 - not urgent and not important - 🟩
+The user must directly indicate the importance of the task, otherwise put 0.
+If importance is indicated, but urgency is not indicated - consider it not urgent.
+If urgency is indicated, but importance is not indicated - consider it not important.
+Indicate importance and urgency in the "title" and "answer" using the colored square emoji indicated above, put it at the very beginning, use other emoji in the "title" and "answer" regardless of these.
+Indicate importance and urgency in words in the "description".
+13. If the task specifies a link to a call or video meeting, write it in "location".
+14. Write in "geo" the location of the event similarly to "location", only if the city or metro station is clearly specified, otherwise null. This field will be used to search for the coordinates of the place on the map.
+
+JSON response format:
+```json
+{ 
+"$schema": "http://json-schema.org/draft-07/schema#", 
+"type": "object", 
+"properties": { 
+"error": {"type": "string"}, 
+"response": {"type": "string"}, 
+"events_tasks": { 
+"type": "array", 
+"items": { 
+"type": "object", 
+"properties": { 
+"answer": {"type": "string"}, 
+"type": {"type": "string", "enum": ["task", "event"]}, 
+"title": {"type": "string"}, 
+"description": {"type": "string"}, 
+"date": {"type": ["string", "null"], "format": "date"}, 
+"time": {"type": ["string", "null"], "pattern": "^([01][0-9]|2[0-3]):[0-5][0-9]$"}, 
+"location": {"type": ["string", "null"]}, 
+"all_day": {"type": "boolean"}, 
+"importance": {"type": "integer"}, 
+"geo": : {"type": "string"} 
+}, 
+"required": ["answer", "type", "title", "description", "date", "time", "location", "all_day", "importance", "geo"] 
+}

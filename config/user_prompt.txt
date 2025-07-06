@@ -1,0 +1,2 @@
+Date and time now: {time}
+Analyze the following sent message: {msg}

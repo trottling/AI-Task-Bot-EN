@@ -1,0 +1,129 @@
+FAQ — Frequently asked questions about AI Task Bot
+
+❓ What is AI Task Bot?
+
+AI Task Bot is a Telegram bot that turns your messages into a list of tasks and events, and can also create a calendar file (.ics) so you don't forget anything.
+
+🔹 How to add a task or event?
+
+Just write the bot a regular message with your to-dos or plans.
+
+You can list tasks separated by commas or on a new line.
+
+Examples:
+
+Call mom tomorrow at 6:00 PM
+
+Go to the store, buy bread and milk
+
+Meet a colleague at the London cafe at 7:00 PM
+
+🔹 2. How does the bot understand a place (geotag)?
+
+Specify the address, city, metro station, or name of the place in the message.
+
+The bot will add this place to the calendar event and try to find it on the map.
+
+Example:
+
+Meeting in Moscow, Tverskaya metro station, tomorrow at 15:00
+
+🔹 3. How to indicate importance and urgency (Eisenhower quadrant)?
+
+In the task text, include the words "important", "urgent", "unimportant", "not urgent".
+
+The bot will determine the priority of the task and show it in the list and the calendar file.
+
+Example:
+
+"Make a report - important, urgent"
+
+🔹 4. How to get a calendar file (.ics)?
+
+After processing the tasks, the bot will send a special file.
+
+Download it and open it on your phone or computer.
+
+Usually the system itself will offer to add it to your calendar
+
+🔹 5. How to use the bot in a group?
+
+1) Add the bot to the group.
+
+2) Grant access to messages
+
+To create tasks, reply to the desired message with the command
+
+/create
+
+The bot will turn the text into tasks and send a file to all chat participants.
+
+🔹 6. How to change the time zone?
+
+Write the command
+
+/timezone +3 (or another time zone).
+
+Important:
+
+In a private message - for yourself, in a group - for all participants.
+
+The time zone affects the time of events in the calendar.
+
+🔹 7. What to do if the bot does not respond or writes an error?
+
+Check that your message is not too short (at least 15 characters) and not too long (up to 750).
+
+Try restarting the bot with the command
+
+/start
+
+If this does not help, write to the administrator.
+
+🔹 8. Why does the bot write in a group/private message that there is no access?
+
+Contact the bot admin for access
+
+🔹 9. Are my tasks visible to others?
+
+In a private message — only to you.
+
+In a group — to all chat participants.
+
+🔹10. What calendars are supported?
+
+Any calendars that support importing events from the iCalendar format.
+
+Support has been tested for:
+
+Yandex calendar
+
+Google calendar
+
+Apple calendar
+
+🔹 11. What are the features and advantages?
+
+- The bot understands places and addresses, adds them to events.
+
+- You can specify links to calls — the bot will add them to the task.
+
+- Priority according to the Eisenhower square is supported (important/urgent, etc.).
+
+- Can be used both in private messages and in groups.
+
+- It's simple: write in plain language, the bot will understand everything itself!
+
+- You can add several tasks at once in one message.
+
+🔹 12. What do the colors of the Eisenhower square mean?
+
+- 🟥 Red — important and urgent (things that can't be put off)
+
+- 🟦 Blue — important, but not urgent (strategic tasks, development)
+
+- 🟨 Yellow — urgent, but not important (routine, small urgent tasks)
+
+- 🟩 Green — not urgent and not important (things "for later", rest)
+
+The bot itself determines the color of the square based on the words "important", "urgent" and shows it in the task list and in the calendar file. This helps to quickly understand what is important and what can be put off.
