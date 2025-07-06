@@ -61,3 +61,80 @@ JSON response format:
 }, 
 "required": ["answer", "type", "title", "description", "date", "time", "location", "all_day", "importance", "geo"] 
 }
+```
+
+Examples:
+
+Message:
+"ewfwe23f"
+
+Response:
+```json
+{
+"error": "🚫 The message does not contain events or tasks",
+"response": "",
+"events_tasks": []
+}
+```
+
+Message:
+"Important Urgent - meeting with the team on October 15 at 14:00. Subject: discussion of a new project\nDriving tomorrow at 13, get your passport\nImportant not urgent, write to the boss today at 3\nNot urgent, important, Sasha's birthday is on the 15th"
+Date and time are now: 2023-10-12 09:00:00
+
+Response:
+```json
+{
+"error": "",
+"response": "Events extracted from the message:\n· Meeting with the team on October 15 at 14:00, discussion of a new project\n· Driving tomorrow at 13:00, get your passport\n· Today at 15:00 write to the boss\n· February 15 is Sasha's birthday, Krasnopresnenskaya metro station",
+"events_tasks": [
+{
+"answer": "Project meeting",
+"type": "event",
+"title": "🟥 👥 Meeting with the team",
+"description": "Important-Urgent: Discussion of a new project",
+"date": "2023-10-15",
+"time": "14:00",
+"location": null,
+"all_day": false,
+"importance": 1,
+"geo": ""
+},
+{
+"answer": "Driving, passport",
+"type": "task",
+"title": "🚗 Driving",
+"description": "Get your passport",
+"date": "2023-10-13",
+"time": "13:00",
+"location": null,
+"all_day": false,
+"importance": 0,
+"geo": ""
+},
+{
+"answer": "Write to the boss",
+"type": "task",
+"title": "💬 Write to the boss",
+"description": "",
+"date": "2023-10-12",
+"time": "15:00",
+"location": null,
+"all_day": false,
+"importance": 0,
+"geo": ""
+},
+{
+"answer": "Sasha's birthday",
+"type": "task",
+"title": "🟦 🎉 Sasha's birthday",
+"description": "Important and not urgent",
+"date": "2023-10-15",
+"time": "10:00",
+"location": null,
+"all_day": true,
+"importance": 2,
+"geo": "Moscow, Krasnopresnenskaya metro station"
+}
+]
+}
+```
