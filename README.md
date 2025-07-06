@@ -1,3 +1,5 @@
+## 🇷🇺  [Русская версия](https://github.com/trottling/AI-Task-Bot)
+
 # AI Task Bot
 
 AI Task Bot is a Telegram bot that converts text messages into regular tasks and calendar events. The bot extracts structured data from text via the OpenAI API (or a compatible service) and can generate `.ics` files for import into any calendar.
